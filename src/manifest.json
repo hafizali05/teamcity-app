@@ -1,6 +1,10 @@
 {
   "name": "Chrome Extension Webpack",
   "options_page": "options.html",
+  "permissions": [
+    "https://*/*",
+    "<all_urls>"
+  ],
   "background": {
     "page": "background.html"
   },
