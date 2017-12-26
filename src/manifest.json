@@ -5,9 +5,6 @@
     "https://*/*",
     "<all_urls>"
   ],
-  "background": {
-    "page": "background.html"
-  },
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
