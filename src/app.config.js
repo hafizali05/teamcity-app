@@ -1,7 +1,6 @@
 routing.$inject = ['$urlRouterProvider', '$locationProvider','$stateProvider'];
-import homeTpl from './home.html';
+import homeTpl from './feature/home/home.html';
 export default function routing($urlRouterProvider,$locationProvider,$stateProvider) {
-    $locationProvider.html5Mode(true);
     $urlRouterProvider.otherwise('/home');
 
     $stateProvider
@@ -9,12 +8,12 @@ export default function routing($urlRouterProvider,$locationProvider,$stateProvi
     // HOME STATES AND NESTED VIEWS ========================================
         .state('home', {
             url: '/home',
-            templateUrl: homeTpl
+            template: homeTpl
         })
 
         // ABOUT PAGE AND MULTIPLE NAMED VIEWS =================================
-        // .state('settings', {
-        //     // we'll get to this in a bit
-        // });
+        .state('settings', {
+            // we'll get to this in a bit
+        });
 }
 
