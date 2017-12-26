@@ -1,5 +1,6 @@
 routing.$inject = ['$urlRouterProvider', '$locationProvider','$stateProvider'];
 import homeTpl from './feature/home/home.html';
+import settingsTpl from './feature/settings/settings.html';
 export default function routing($urlRouterProvider,$locationProvider,$stateProvider) {
     $urlRouterProvider.otherwise('/home');
 
@@ -13,7 +14,8 @@ export default function routing($urlRouterProvider,$locationProvider,$stateProvi
 
         // ABOUT PAGE AND MULTIPLE NAMED VIEWS =================================
         .state('settings', {
-            // we'll get to this in a bit
+            url: '/settings',
+            template: settingsTpl
         });
 }
 
