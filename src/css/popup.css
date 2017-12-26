@@ -1,3 +1,8 @@
 body {
+    width: 600px;
     background: teal;
+}
+
+font {
+    color: #2d5fb3;
 }

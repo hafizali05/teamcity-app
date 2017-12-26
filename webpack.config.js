@@ -21,7 +21,8 @@ if (fileSystem.existsSync(secretsPath)) {
 
 var options = {
   entry: {
-    app: path.join(__dirname, "src", "app.js")
+      popup: path.join(__dirname, "src", "popup.js"),
+
 
   },
   output: {
@@ -44,8 +45,8 @@ var options = {
       },
       {
         test: /\.html$/,
-        loader: "html-loader",
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: 'raw-loader' // add raw loader npm package to make it work.
       }
     ]
   },
@@ -59,21 +60,32 @@ var options = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(env.NODE_ENV)
     }),
-    new CopyWebpackPlugin([{
-      from: "src/manifest.json",
-      transform: function (content, path) {
-        // generates the manifest file using the package.json informations
-        return Buffer.from(JSON.stringify({
-          description: process.env.npm_package_description,
-          version: process.env.npm_package_version,
-          ...JSON.parse(content.toString())
-        }))
+    new CopyWebpackPlugin([
+      {
+        from: "src/manifest.json",
+        transform: function (content, path) {
+          // generates the manifest file using the package.json informations
+          return Buffer.from(JSON.stringify({
+            description: process.env.npm_package_description,
+            version: process.env.npm_package_version,
+            ...JSON.parse(content.toString())
+          }))
+        }
+      },
+      {
+        from: 'src/img/icon-16.png'
+      },
+      {
+          from: 'src/img/icon-48.png'
+      },
+      {
+          from: 'src/img/icon-128.png'
       }
-    }]),
+    ]),
     new HtmlWebpackPlugin({
         template: path.join(__dirname, "src", "popup.html"),
         filename: "popup.html",
-        chunks: ["app"]
+        chunks: ["popup"]
     }),
     new ExtractTextPlugin({
         filename:"styles.css",
