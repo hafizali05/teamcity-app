@@ -5,7 +5,8 @@ var webpack = require("webpack"),
     CleanWebpackPlugin = require("clean-webpack-plugin"),
     CopyWebpackPlugin = require("copy-webpack-plugin"),
     HtmlWebpackPlugin = require("html-webpack-plugin"),
-    WriteFilePlugin = require("write-file-webpack-plugin");
+    WriteFilePlugin = require("write-file-webpack-plugin"),
+    ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 // load the secrets
 var alias = {};
@@ -20,9 +21,8 @@ if (fileSystem.existsSync(secretsPath)) {
 
 var options = {
   entry: {
-    app: path.join(__dirname, "src", "app.js"),
-    popup: path.join(__dirname, "src", "js", "popup.js"),
-    options: path.join(__dirname, "src", "js", "options.js")
+    app: path.join(__dirname, "src", "app.js")
+
   },
   output: {
     path: path.join(__dirname, "build"),
@@ -31,9 +31,11 @@ var options = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        loader: "style-loader!css-loader",
-        exclude: /node_modules/
+          test: /\.css$/,
+          use: ExtractTextPlugin.extract({
+              fallback: "style-loader",
+              use: "css-loader"
+          })
       },
       {
         test: new RegExp('\.(' + fileExtensions.join('|') + ')$'),
@@ -69,15 +71,15 @@ var options = {
       }
     }]),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src", "popup.html"),
-      filename: "popup.html",
-      chunks: ["popup"]
+        template: path.join(__dirname, "src", "popup.html"),
+        filename: "popup.html",
+        chunks: ["app"]
     }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src", "options.html"),
-      filename: "options.html",
-      chunks: ["options"]
+    new ExtractTextPlugin({
+        filename:"styles.css",
+        allChunks:true
     }),
+
     new WriteFilePlugin()
   ]
 };
