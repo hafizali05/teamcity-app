@@ -1,33 +1,42 @@
 <!DOCTYPE html>
 <html ng-app="teamcityApp" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <!--<meta charset="UTF-8">-->
+    <!--<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />-->
     <title>Angular App</title>
     <base href="/">
 </head>
 <body>
-<div class="footer-demo" ng-app="app" ng-csp layout="row" layout-fill>
-    <div layout="column" layout-fill>
-        <header>
-            <md-toolbar layout="row">
-                <a ui-sref="home"><h1 class="md-toolbar-tools" layout-align-gt-sm="center">Angular</h1></a>
 
+        <md-content id="content" layout="column" flex ng-app="teamcityApp" ng-controller="teamcityApp">
+            <md-toolbar class="md-whiteframe-z2 loginHeader">
+                <div class="loginLabel" style="text-align: left;">
+                    <h3>Login</h3>
+                </div>
             </md-toolbar>
-        </header>
 
-
-
-        <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
-        <div ui-view></div>
-
-
-
-
-
-
-    <!--</div>-->
-    </div>
+            <md-content flex layout="column" layout-align="center center" layout-padding>
+                <form name="login">
+                    <md-input-container class="md-block">
+                        <label for="server">teamcity URL</label>
+                        <input type="url" name="server" ng-model="vm.teamityServer" placeholder="teamcity.keytree.net" required />
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" ng-model="vm.email" required />
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" ng-model="vm.password" required />
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <div layout="row" layout-align="center center">
+                            <md-button class="md-raised md-accent" flex="50">Login</md-button>
+                        </div>
+                    </md-input-container>
+                </form>
+            </md-content>
+        </md-content>
 
 </body>
 </html>

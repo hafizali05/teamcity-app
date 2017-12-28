@@ -6,11 +6,19 @@ import angularAnimate from 'angular-animate';
 import angularMaterial from 'angular-material';
 import angularAria from 'angular-aria';
 import uirouter from '@uirouter/angularjs';
-import routing from './app.config';
 
 angular.module('teamcityApp', [uirouter,angularMaterial, angularAnimate, angularAria])
-    .config(routing);
+    // .config(routing)
+    .controller('teamcityApp',function () {
 
+    })
+    .config(($mdThemingProvider) => {
+        // Register the user `avatar` icons
+
+        $mdThemingProvider.theme('default')
+            // .primaryPalette('white')
+            .accentPalette('blue')
+    });
 
 
 

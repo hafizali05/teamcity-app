@@ -1,8 +1,25 @@
 body {
     width: 600px;
-    background: teal;
+    /*background-color: rgb(250,250,250);*/
+}
+/*.ext-header {*/
+    /*background-color: #f6f6f6;*/
+/*}*/
+
+/*.project-name {*/
+    /*color: #1564c2;*/
+    /*text-decoration: none !important;*/
+
+/*}*/
+
+#content > md-content {
+    background-color: #eee;
 }
 
-font {
-    color: #2d5fb3;
+.loginHeader{
+    background-color: ghostwhite !important;
+}
+.loginLabel{
+    color: #1564c2;
+    padding-left: 20px;
 }
