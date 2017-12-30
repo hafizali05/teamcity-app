@@ -8,7 +8,6 @@ import angularAria from 'angular-aria';
 import uirouter from '@uirouter/angularjs';
 import routing from './app.config';
 import themeSettings from './themeSettings';
-// import home from './feature/home';
 import loginPage from './feature/home';
 
 angular.module('teamcityApp', [loginPage, uirouter,angularMaterial, angularAnimate, angularAria])

@@ -1,15 +1,13 @@
+// import authentication from '../../services/authentication.service';
 export default class HomeController {
-    constructor($scope) {
-        this.$scope = $scope;
-        $scope.submitForm = this.submitForm;
+    constructor(authentication) {
+        this.auth = authentication;
     }
-    submitForm(data) {
-        console.log('working',data);
-        console.log(data);
+    randomName() {
+        console.log('auth this',this);
     }
-
 }
 
 
 
-HomeController.$inject = ['$scope'];
+HomeController.$inject = ['$scope','authentication'];
