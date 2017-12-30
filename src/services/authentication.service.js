@@ -7,7 +7,7 @@ class Authentication {
 
 
     authenticate(){
-        return 'authentication working'
+     console.log('hello working ');
     }
 
 }

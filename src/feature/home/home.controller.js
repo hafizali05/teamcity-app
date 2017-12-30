@@ -1,10 +1,10 @@
-// import authentication from '../../services/authentication.service';
 export default class HomeController {
-    constructor(authentication) {
+    constructor($scope,authentication) {
         this.auth = authentication;
     }
     randomName() {
-        console.log('auth this',this);
+        console.log('auth this',this.auth.authenticate());
+
     }
 }
 
