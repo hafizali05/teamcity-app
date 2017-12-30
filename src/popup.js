@@ -8,13 +8,15 @@ import angularAria from 'angular-aria';
 import uirouter from '@uirouter/angularjs';
 import routing from './app.config';
 import themeSettings from './themeSettings';
+// import home from './feature/home';
+import loginPage from './feature/home';
 
-angular.module('teamcityApp', [uirouter,angularMaterial, angularAnimate, angularAria])
+angular.module('teamcityApp', [loginPage, uirouter,angularMaterial, angularAnimate, angularAria])
+    .controller('teamcityApp',function ($scope) {
+        $scope.greeting = "welcome";
+    })
     .config(routing)
     .config(themeSettings)
-    .controller('teamcityApp',function () {
-
-    });
     // .config(($mdThemingProvider) => {
     //     // Register the user `avatar` icons
     //

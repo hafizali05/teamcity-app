@@ -1,21 +1,21 @@
-<md-content flex layout="column" layout-align="center center" layout-padding>
-    <form name="login">
-        <md-input-container class="md-block">
-            <label for="server">teamcity URL</label>
-            <input type="url" name="server" ng-model="vm.teamityServer" placeholder="teamcity.keytree.net" required />
-        </md-input-container>
-        <md-input-container class="md-block">
-            <label for="email">Email</label>
-            <input type="email" name="email" ng-model="vm.email" required />
-        </md-input-container>
-        <md-input-container class="md-block">
-            <label for="password">Password</label>
-            <input type="password" name="password" ng-model="vm.password" required />
-        </md-input-container>
-        <md-input-container class="md-block">
-            <div layout="row" layout-align="center center">
-                <md-button class="md-raised md-accent" flex="50">Login</md-button>
-            </div>
-        </md-input-container>
-    </form>
-</md-content>
+<div ng-controller="HomeController">
+    <md-content flex layout="column" layout-align="center center" layout-padding>
+        <form name="form" ng-submit="submitForm(user)">
+            <md-input-container class="md-block">
+                <label for="server">teamcity URL</label>
+                <input type="url" name="server" placeholder="teamcity.keytree.net" required />
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label for="email">Email</label>
+                <input type="email" name="email" ng-model="user.email" required />
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label for="password">Password</label>
+                <input type="password" name="password" ng-model="user.password" required />
+            </md-input-container>
+            <md-input-container class="md-block">
+                <md-button type="submit" class="md-raised md-accent">Submit</md-button>
+            </md-input-container>
+        </form>
+    </md-content>
+</div>
