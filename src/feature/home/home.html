@@ -1,13 +1,13 @@
 <div ng-controller="HomeController">
     <md-content flex layout="column" layout-align="center center" layout-padding>
-        <form name="form" ng-submit="home.randomName()">
+        <form name="form" ng-submit="home.randomName(user)">
             <md-input-container class="md-block">
                 <label for="server">teamcity URL</label>
-                <input type="url" name="server" placeholder="teamcity.keytree.net" required />
+                <input type="url" name="server" placeholder="teamcity.keytree.net" ng-model="user.teamcityURL" required />
             </md-input-container>
             <md-input-container class="md-block">
-                <label for="email">Email</label>
-                <input type="email" name="email" ng-model="user.email" required />
+                <label for="username">Username</label>
+                <input type="text" name="username" ng-model="user.username" required />
             </md-input-container>
             <md-input-container class="md-block">
                 <label for="password">Password</label>
