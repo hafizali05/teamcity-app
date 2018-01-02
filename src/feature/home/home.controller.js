@@ -26,14 +26,21 @@ export default class HomeController {
             title: 'ERROR',
             message: "fetch error"
         };
+
+        var successLogin = {
+            type: 'basic',
+            iconUrl: 'icon-48.png',
+            title: 'login successful',
+            message: 'You are the man!successfully logged in'
+        };
     this.creds = data;
     this.auth.validateURL(data.teamcityURL).then(response => {
             if(response.status === 200){
                 this.auth.authenticate(this.creds)
                     .then( response => {
                         console.log('response from authenticate',response);
+                        chrome.notifications.create(successLogin);                        
                     }).catch( error => {
-                    console.log(error);
                     chrome.notifications.create(fetchError);
                 });
             } else {
