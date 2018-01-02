@@ -33,10 +33,10 @@ class Authentication {
         };
         var rest = "/projects";
         var res = fetch(baseURl + rest,options)
-            .then(response => console.log(response))
-                    // .then(response => response.text().then(function(text){
-                    //     return JSON.parse(text);
-                    // }))
+            // .then(response => console.log(response))
+            .then(response => response.text().then(function(text){
+                return JSON.parse(text);
+            }))
             .then(data => data)
             .catch(e => console.log(e))
         return res;

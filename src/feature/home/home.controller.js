@@ -38,17 +38,14 @@ export default class HomeController {
             if(response.status === 200){
                 this.auth.authenticate(this.creds)
                     .then( response => {
-                        console.log('response from authenticate',response);
                         chrome.notifications.create(successLogin);                        
                     }).catch( error => {
                     chrome.notifications.create(fetchError);
                 });
             } else {
                 chrome.notifications.create(InValidURL);
-                return false;
             }
             }).catch(eror => {
-            console.log(eror);
             chrome.notifications.create(fetchError);
         });
     }
