@@ -1,9 +1,11 @@
 export default class HomeController {
-    constructor($scope,authentication) {
+    constructor($scope,authentication){
         this.auth = authentication;
     }
+    origURL(data){
+
+    }
     randomName(data) {
-        console.log(chrome)
         var ValidURL = {
             type : 'basic',                // type of notification we can change it in chrome developer tools
             iconUrl: 'icon-48.png',          // icon appear for limit
@@ -17,33 +19,31 @@ export default class HomeController {
             title: 'Status',
             message: "Fuck! get your fucking URL straight!"
         };
-        // chrome.storage.sync.
 
-        function callback() {
-            console.log('working notification');
-        }
-        //
-        this.auth.validateURL(data.teamcityURL)
-            .then(function (response) {
-                if(response.status === 200){
-                    chrome.notifications.create(ValidURL);
-                } else {
-                    chrome.notifications.create(InValidURL);
-                }
-            }).catch(function (eror) {
-                console.log(eror);
-            })
-
-
-
-
-        // console.log('res from randomName',res);
-        // if(res){
-        //     console.log('authenticated');
-        // } else {
-        //     console.log('not authenticated');
-        // }
-
+        var fetchError = {
+            type : 'basic',                // type of notification we can change it in chrome developer tools
+            iconUrl: 'icon-48.png',          // icon appear for limit
+            title: 'ERROR',
+            message: "fetch error"
+        };
+    this.creds = data;
+    this.auth.validateURL(data.teamcityURL).then(response => {
+            if(response.status === 200){
+                this.auth.authenticate(this.creds)
+                    .then( response => {
+                        console.log('response from authenticate',response);
+                    }).catch( error => {
+                    console.log(error);
+                    chrome.notifications.create(fetchError);
+                });
+            } else {
+                chrome.notifications.create(InValidURL);
+                return false;
+            }
+            }).catch(eror => {
+            console.log(eror);
+            chrome.notifications.create(fetchError);
+        });
     }
 }
 
