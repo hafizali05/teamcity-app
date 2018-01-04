@@ -6,20 +6,20 @@ import angularAnimate from 'angular-animate';
 import angularMaterial from 'angular-material';
 import angularAria from 'angular-aria';
 import uirouter from '@uirouter/angularjs';
+import routing from './app.config';
+import themeSettings from './themeSettings';
+import loginPage from './feature/home';
 
-angular.module('teamcityApp', [uirouter,angularMaterial, angularAnimate, angularAria])
-    // .config(routing)
-    .controller('teamcityApp',function () {
-
+angular.module('teamcityApp', [loginPage, uirouter,angularMaterial, angularAnimate, angularAria])
+    .controller('teamcityApp',function ($scope) {
+        $scope.greeting = "welcome";
     })
-    .config(($mdThemingProvider) => {
-        // Register the user `avatar` icons
-
-        $mdThemingProvider.theme('default')
-            // .primaryPalette('white')
-            .accentPalette('blue')
-    });
-
-
-
-console.log('working');
+    .config(routing)
+    .config(themeSettings)
+    // .config(($mdThemingProvider) => {
+    //     // Register the user `avatar` icons
+    //
+    //     $mdThemingProvider.theme('default')
+    //         // .primaryPalette('white')
+    //         .accentPalette('blue')
+    // });

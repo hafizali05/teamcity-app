@@ -1,12 +1,21 @@
-<div>
-    <h1>The Homey Page</h1>
-    <h1>The Homey Page</h1>
-    <h1>The Homey Page</h1>
-    <a ui-sref="settings">Settings</a>
-    <h1>Hafiz allly lalani</h1>
-    <h1>haffiz test two</h1>
-    <h1>The Homey Page</h1>
-    <h1>The Homey Page</h1>
-    <h1>The Homey Page</h1>
-    <h1>The Homey Page</h1>
+<div ng-controller="HomeController">
+    <md-content flex layout="column" layout-align="center center" layout-padding>
+        <form name="form" ng-submit="home.randomName(user)">
+            <md-input-container class="md-block">
+                <label for="server">teamcity URL</label>
+                <input type="url" name="server" placeholder="teamcity.keytree.net" ng-model="user.teamcityURL" required />
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label for="username">Username</label>
+                <input type="text" name="username" ng-model="user.username" required />
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label for="password">Password</label>
+                <input type="password" name="password" ng-model="user.password" required />
+            </md-input-container>
+            <md-input-container class="md-block">
+                <md-button type="submit" class="md-raised md-accent">Submit</md-button>
+            </md-input-container>
+        </form>
+    </md-content>
 </div>
