@@ -1,10 +1,10 @@
-export default class HomeController {
-    constructor($scope,authentication){
-        this.auth = authentication;
-    }
-    origURL(data){
 
+export default class HomeController {
+    constructor($scope,authentication,$state){
+        this.auth = authentication;
+        this.$state = $state;
     }
+
     randomName(data) {
         var ValidURL = {
             type : 'basic',                // type of notification we can change it in chrome developer tools
@@ -26,22 +26,32 @@ export default class HomeController {
             title: 'ERROR',
             message: "fetch error"
         };
+
+        var successLogin = {
+            type: 'basic',
+            iconUrl: 'icon-48.png',
+            title: 'login successful',
+            message: 'You are the man!successfully logged in'
+        };
     this.creds = data;
     this.auth.validateURL(data.teamcityURL).then(response => {
             if(response.status === 200){
+                console.log('passed validate url')
                 this.auth.authenticate(this.creds)
                     .then( response => {
-                        console.log('response from authenticate',response);
+                        chrome.notifications.create(successLogin); 
+                        console.log('response from authenticate:',response);                       
+                        this.$state.go('settings');
                     }).catch( error => {
                     console.log(error);
                     chrome.notifications.create(fetchError);
                 });
             } else {
+                console.log('Invalid URL');                
                 chrome.notifications.create(InValidURL);
-                return false;
             }
-            }).catch(eror => {
-            console.log(eror);
+            }).catch(error => {
+                console.log(error);                
             chrome.notifications.create(fetchError);
         });
     }
@@ -49,4 +59,4 @@ export default class HomeController {
 
 
 
-HomeController.$inject = ['$scope','authentication'];
+HomeController.$inject = ['$scope','authentication','$state'];
