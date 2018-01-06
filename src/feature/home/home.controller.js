@@ -8,8 +8,6 @@ export default class HomeController {
     }
 
     randomName(data) {
-        this.$state.go('settings');
-        return false;
         var ValidURL = {
             type : 'basic',                // type of notification we can change it in chrome developer tools
             iconUrl: 'icon-48.png',          // icon appear for limit
@@ -38,18 +36,14 @@ export default class HomeController {
             message: 'You are the man!successfully logged in'
         };
     this.creds = data;
-    console.log($state);
-    debugger;
-    $state.go('settings');
-
-    return false;
     this.auth.validateURL(data.teamcityURL).then(response => {
             if(response.status === 200){
                 console.log('passed validate url')
                 this.auth.authenticate(this.creds)
                     .then( response => {
-                        chrome.notifications.create(successLogin);                        
-                        $state.go('^');                        
+                        chrome.notifications.create(successLogin); 
+                        console.log('response from authenticate:',response);                       
+                        this.$state.go('settings');
                     }).catch( error => {
                     console.log(error);
                     chrome.notifications.create(fetchError);
