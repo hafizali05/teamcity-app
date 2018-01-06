@@ -5,7 +5,7 @@ import home from './home.html'
 export default function routes($stateProvider) {
     $stateProvider
         .state('home', {
-            url: '/',
+            url: '/home',
             controller: 'HomeController',
             template: home,
             controllerAs : 'home'

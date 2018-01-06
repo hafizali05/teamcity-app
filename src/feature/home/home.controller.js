@@ -1,11 +1,15 @@
-export default class HomeController {
-    constructor($scope,authentication){
-        this.auth = authentication;
-    }
-    origURL(data){
 
+export default class HomeController {
+    constructor($scope,authentication,$state){
+        // this.settings = settings;
+        console.log('HomeController');
+        this.auth = authentication;
+        this.$state = $state;
     }
+
     randomName(data) {
+        this.$state.go('settings');
+        return false;
         var ValidURL = {
             type : 'basic',                // type of notification we can change it in chrome developer tools
             iconUrl: 'icon-48.png',          // icon appear for limit
@@ -34,18 +38,28 @@ export default class HomeController {
             message: 'You are the man!successfully logged in'
         };
     this.creds = data;
+    console.log($state);
+    debugger;
+    $state.go('settings');
+
+    return false;
     this.auth.validateURL(data.teamcityURL).then(response => {
             if(response.status === 200){
+                console.log('passed validate url')
                 this.auth.authenticate(this.creds)
                     .then( response => {
                         chrome.notifications.create(successLogin);                        
+                        $state.go('^');                        
                     }).catch( error => {
+                    console.log(error);
                     chrome.notifications.create(fetchError);
                 });
             } else {
+                console.log('Invalid URL');                
                 chrome.notifications.create(InValidURL);
             }
-            }).catch(eror => {
+            }).catch(error => {
+                console.log(error);                
             chrome.notifications.create(fetchError);
         });
     }
@@ -53,4 +67,4 @@ export default class HomeController {
 
 
 
-HomeController.$inject = ['$scope','authentication'];
+HomeController.$inject = ['$scope','authentication','$state'];

@@ -1,0 +1,28 @@
+{
+    {
+        "name": "validateURL"
+        "type": "basic",
+        "iconUrl": "icon-48.png",
+        "title": "Server connection",
+        "message": "dope! server URL looks legit!"
+    },
+    {
+        "name": "validateURL"        
+        "type" : "basic",
+        "title": "Status",
+        "iconUrl": "icon-48.png",
+        "message": "Fuck! get your fucking URL straight!"
+    },
+    {
+        "type" : "basic",
+        "iconUrl": "icon-48.png",
+        "title": "ERROR",
+        "message": "fetch error"
+    },
+    {
+        "type": "basic",
+        "iconUrl": "icon-48.png",
+        "title": "login successful",
+        "message": "You are the man!successfully logged in"
+    }
+} 

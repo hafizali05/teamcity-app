@@ -18,8 +18,10 @@ body {
 
 .loginHeader{
     background-color: white !important;
+    
 }
 .loginLabel{
     color: #1564c2;
-    padding-left: 20px;
+    padding: 20px;
+    text-decoration: none;    
 }

@@ -9,8 +9,9 @@ import uirouter from '@uirouter/angularjs';
 import routing from './app.config';
 import themeSettings from './themeSettings';
 import loginPage from './feature/home';
-
-angular.module('teamcityApp', [loginPage, uirouter,angularMaterial, angularAnimate, angularAria])
+import Settings from './feature/settings';
+console.log(loginPage,Settings);
+angular.module('teamcityApp', [loginPage, Settings,  uirouter, angularMaterial, angularAnimate, angularAria])
     .controller('teamcityApp',function ($scope) {
         $scope.greeting = "welcome";
     })
