@@ -1,8 +1,6 @@
 
 export default class HomeController {
     constructor($scope,authentication,$state){
-        // this.settings = settings;
-        console.log('HomeController');
         this.auth = authentication;
         this.$state = $state;
     }

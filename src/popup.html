@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html ng-app="teamcityApp" lang="en">
 <head>
-    <!--<meta charset="UTF-8">-->
-    <!--<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Angular App</title>
     <base href="/">
 </head>
 <body>
-
-        <md-content id="content" layout="column" flex ng-app="teamcityApp" ng-controller="teamcityApp">
-            <md-toolbar class="md-whiteframe-z2 loginHeader">
-                <a href="/home" class="loginLabel">Login</a>
-            </md-toolbar>
-
-            <div ui-view></div>
-        </md-content>
-
+    <md-content id="content" layout="column" flex ng-app="teamcityApp" ng-controller="teamcityApp">
+        <md-toolbar class="md-whiteframe-z2 loginHeader">
+            <a ui-sref="/home" class="loginLabel">Login</a>
+        </md-toolbar>
+        <div ui-view></div>
+    </md-content>
 </body>
 </html>

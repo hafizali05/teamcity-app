@@ -16,11 +16,4 @@ angular.module('teamcityApp', [loginPage, Settings,  uirouter, angularMaterial, 
         $scope.greeting = "welcome";
     })
     .config(routing)
-    .config(themeSettings)
-    // .config(($mdThemingProvider) => {
-    //     // Register the user `avatar` icons
-    //
-    //     $mdThemingProvider.theme('default')
-    //         // .primaryPalette('white')
-    //         .accentPalette('blue')
-    // });
+    .config(themeSettings);
