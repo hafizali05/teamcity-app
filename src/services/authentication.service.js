@@ -2,17 +2,13 @@ import angular from 'angular';
 
 class Authentication {
     validateURL(url){
-        let baseURl = `${ url }/app/rest/latest`;
-        const fetchData = async ()=>{
-            const response = await fetch(baseURl)
-            return response;
-        }
-        return fetchData();
+        return fetch(`${ url }/app/rest/latest`);
+
     }
 
     authenticate(data){
-        // https://api.nasa.gov/planetary/apod?api_key=NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo
-        var baseURl  = `${ data.teamcityURL }/httpAuth/app/rest`,
+        // var baseURl  = "https://api.nasa.gov/planetary/apod?api_key=NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo";
+        var baseURl  = `teamcity.keyt.net/httpAuth/app/rest`,
         headers = new Headers(),
         options = {
             body:data,
@@ -20,19 +16,26 @@ class Authentication {
         },
         rest = "/projects";
 
-
+        var successLogin = {
+            type: 'basic',
+            iconUrl: 'icon-48.png',
+            title: 'login successful',
+            message: 'You are the man!successfully logged in'
+        };
         headers.append('Authorization', 'Basic ' + window.btoa(data.username + ":" + data.password));
         headers.append("Content-Type", "application/json");
         headers.append("Accept", "application/json");
 
-
         return fetch(baseURl + rest,options)
-            // .then(response => console.log(response))
-                .then(response => response.text().then(function(text){
-                    return JSON.parse(text);
-                }))
-                .then(data => data)
-                .catch(e => console.log(e))
+                .then(response => {
+                    console.log(response);
+                    chrome.notifications.create(successLogin);                                        
+                    return response.json();
+                })
+                .catch(error => {
+                    console.log('error from authenticate',error);
+                    return error;
+                })
     }
 
 }

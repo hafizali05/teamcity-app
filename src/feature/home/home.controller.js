@@ -39,11 +39,23 @@ export default class HomeController {
                 console.log('passed validate url')
                 this.auth.authenticate(this.creds)
                     .then( response => {
-                        chrome.notifications.create(successLogin); 
-                        console.log('response from authenticate:',response);                       
-                        this.$state.go('settings');
+                        console.log('response from controller',response);
+                        return false;
+                        if(response.status === 200){
+                            console.log('response from this.auth',response);
+                            chrome.notifications.create(successLogin);
+                            let credentials = {
+                                server: data.teamcityURL,
+                                logins: window.btoa(data.username + ":" + data.password)
+                            };
+                            chrome.storage.local.set({'credentials':credentials});
+                            chrome.storage.local.get('credentials',result=>{
+                                console.log('storage data:',result);
+                            })
+                            this.$state.go('settings');                            
+                        }
                     }).catch( error => {
-                    console.log(error);
+                    console.log('error from home controller',error);
                     chrome.notifications.create(fetchError);
                 });
             } else {
@@ -51,12 +63,11 @@ export default class HomeController {
                 chrome.notifications.create(InValidURL);
             }
             }).catch(error => {
-                console.log(error);                
+                console.log(error);
+                return error;                
             chrome.notifications.create(fetchError);
         });
     }
 }
-
-
 
 HomeController.$inject = ['$scope','authentication','$state'];
