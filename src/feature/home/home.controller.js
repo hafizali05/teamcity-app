@@ -65,7 +65,7 @@ export default class HomeController {
             }).catch(error => {
                 console.log(error);
                 return error;                
-            chrome.notifications.create(fetchError);
+                chrome.notifications.create(fetchError);
         });
     }
 }
