@@ -1,11 +1,13 @@
 {
   "name": "Chrome Extension Webpack",
   "permissions": [
+    "cookies",    
     "https://*/*",
     "<all_urls>",
     "storage",
     "notifications",
     "contextMenus"
+    
   ],
   "web_accessible_resources": [
     "icon-48.png"

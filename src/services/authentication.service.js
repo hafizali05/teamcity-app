@@ -5,17 +5,51 @@ class Authentication {
         return fetch(`${ url }/app/rest/latest`);
 
     }
+    showBuildCount(){
+        console.log('entered show build counts');
+        var baseURl  = "https://teamcity.keytree.net/httpAuth/app/rest",        
+            headers = new Headers(),
+            options = {
+                credentials: 'include',
+                headers: headers
+            },
+            rest = "/buildQueue";
+        var successLogin = {
+            type: 'basic',
+            iconUrl: 'icon-48.png',
+            title: 'login successful',
+            message: 'You are the man!successfully logged in'
+        };
+        headers.append("Content-Type", "application/json");
+        headers.append("Accept", "application/json");
+
+        return fetch(baseURl + rest,options)
+                .then(response => {
+                    console.log('response from ');
+                    return response.json();
+                    chrome.notifications.create(successLogin);                                       
+                })
+                .catch(error => {
+                    console.log('error from authenticate',error);
+                    return error;
+                })
+    }
 
     authenticate(data){
         // var baseURl  = "https://api.nasa.gov/planetary/apod?api_key=NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo";
-        var baseURl  = `teamcity.keyt.net/httpAuth/app/rest`,
+        // var baseURl  = `teamcity.keyt.net/httpAuth/app/rest`,
+        var baseURl  = `${ data.teamcityURL }/httpAuth/app/rest`,        
         headers = new Headers(),
         options = {
-            body:data,
+            credentials: 'include', // here's the magical line that fixed everything            
+            // method: 'POST',
+            // body:data,
             headers: headers
-        },
-        rest = "/projects";
+            // credentials: 'same-origin'            
 
+        },
+        // rest = "/projects";
+        rest = "/projects";
         var successLogin = {
             type: 'basic',
             iconUrl: 'icon-48.png',
@@ -29,7 +63,7 @@ class Authentication {
         return fetch(baseURl + rest,options)
                 .then(response => {
                     console.log(response);
-                    chrome.notifications.create(successLogin);                                        
+                    chrome.notifications.create(successLogin);                                       
                     return response.json();
                 })
                 .catch(error => {

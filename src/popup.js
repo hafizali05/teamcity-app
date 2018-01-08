@@ -13,6 +13,10 @@ import Settings from './feature/settings';
 angular.module('teamcityApp', [loginPage, Settings,  uirouter, angularMaterial, angularAnimate, angularAria])
     .controller('teamcityApp',function ($scope) {
         $scope.greeting = "welcome";
+        console.log('chrome  cookies',chrome);
+        chrome.cookies.getAll({domain:'teamcity.keytree.net'},function(cookies){
+                console.log('cookies:',cookies);
+        })
     })
     .config(routing)
     .config(themeSettings);

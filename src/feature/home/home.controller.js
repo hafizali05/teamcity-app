@@ -40,20 +40,9 @@ export default class HomeController {
                 this.auth.authenticate(this.creds)
                     .then( response => {
                         console.log('response from controller',response);
-                        return false;
-                        if(response.status === 200){
-                            console.log('response from this.auth',response);
-                            chrome.notifications.create(successLogin);
-                            let credentials = {
-                                server: data.teamcityURL,
-                                logins: window.btoa(data.username + ":" + data.password)
-                            };
-                            chrome.storage.local.set({'credentials':credentials});
-                            chrome.storage.local.get('credentials',result=>{
-                                console.log('storage data:',result);
-                            })
+                        // if(response.status === 200){
                             this.$state.go('settings');                            
-                        }
+                        // }
                     }).catch( error => {
                     console.log('error from home controller',error);
                     chrome.notifications.create(fetchError);
