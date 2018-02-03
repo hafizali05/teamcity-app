@@ -9,7 +9,9 @@
 <body>
     <md-content id="content" layout="column" flex ng-app="teamcityApp" ng-controller="teamcityApp">
         <md-toolbar class="md-whiteframe-z2 loginHeader">
-            <a href="#/home" ui-sref="home" class="loginLabel">Login</a>
+                <!-- <a ng-show="$root.loggedIn" href="#/home" ui-sref="home" class="loginLabel">not logged in</a>             -->
+            <a ng-hide="$root.loggedIn" class="loginLabel">not logged in</a>
+            <a ng-show="$root.loggedIn" class="loginLabel">already logged</a>            
         </md-toolbar>
         <div ui-view></div>
     </md-content>

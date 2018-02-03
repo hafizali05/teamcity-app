@@ -11,23 +11,29 @@ import routing from './app.config';
 import themeSettings from './themeSettings';
 import loginPage from './feature/home';
 import Settings from './feature/settings';
+import PopupController from './popup.controller';
+
 angular.module('teamcityApp', [loginPage, Settings,  uirouter, angularMaterial, angularAnimate, angularAria, ngCookie])
-    .controller('teamcityApp',function ($scope) {
-    })
+    .controller('teamcityApp', PopupController)
     .config(routing)
     .config(themeSettings)
     .run(['$rootScope', '$transitions', '$state', '$cookies', '$http',
         function ($rootScope, $transitions, $state, $cookies, $http) {
+            // $rootScope.globals.loggedIn = false;
             chrome.cookies.getAll({},(cookies)=>{
-                console.log(cookies);
-                let cookie = cookies.find(ele => ele.name === "TCSESSIONID");
+                let cookie = cookies.filter(ele => ele.name === "TCSESSIONID");
                 console.log(cookie);
-                if(cookie < 1 || cookie === undefined){
+                if(cookie.length < 1 || cookie === undefined){
+                    console.log('in home')                    
+                    $rootScope.loggedIn = false;                    
                     $state.go('home');
                 } else {
+                    console.log('in settings')
+                    $rootScope.loggedIn = true;                    
                     $state.go('settings');                    
                 }
             });
+            console.log('$rootScope after run in popup');
             // $transitions.onStart({
             //     to: function (state) {
             //         console.log(chrome.cookies);

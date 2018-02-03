@@ -1,6 +1,10 @@
 
 export default class HomeController {
-    constructor($scope,authentication,$state){
+    constructor($scope,authentication,$state,$rootScope){
+        // this.$scope;
+        // this.$rootScope;
+        this.$scope = $scope;
+        this.$rootScope = $rootScope;
         this.auth = authentication;
         this.$state = $state;
     }
@@ -33,30 +37,33 @@ export default class HomeController {
             title: 'login successful',
             message: 'You are the man!successfully logged in'
         };
-    this.creds = data;
-    this.auth.validateURL(data.teamcityURL).then(response => {
-            if(response.status === 200){
-                console.log('passed validate url')
-                this.auth.authenticate(this.creds)
-                    .then( response => {
-                        console.log('response from controller',response);
-                        // if(response.status === 200){
-                            this.$state.go('settings');                            
-                        // }
-                    }).catch( error => {
-                    console.log('error from home controller',error);
+        this.creds = data;
+        console.log(this);
+        this.auth.validateURL(data.teamcityURL).then(response => {
+                if(response.status === 200){
+                    console.log('passed validate url')
+                    this.auth.authenticate(this.creds)
+                        .then( response => {
+                            console.log('response from controller',response);
+                            if(response && response.project && response.project.length > 1){
+                                console.log(this.$scope);
+                                this.$rootScope.loggedIn = true;
+                                this.$state.go('settings');                            
+                            }
+                        }).catch( error => {
+                        console.log('error from home controller',error);
+                        chrome.notifications.create(fetchError);
+                    });
+                } else {
+                    console.log('Invalid URL');                
+                    chrome.notifications.create(InValidURL);
+                }
+                }).catch(error => {
+                    console.log(error);
+                    return error;                
                     chrome.notifications.create(fetchError);
-                });
-            } else {
-                console.log('Invalid URL');                
-                chrome.notifications.create(InValidURL);
-            }
-            }).catch(error => {
-                console.log(error);
-                return error;                
-                chrome.notifications.create(fetchError);
-        });
+            });
     }
 }
 
-HomeController.$inject = ['$scope','authentication','$state'];
+HomeController.$inject = ['$scope','authentication','$state','$rootScope'];
