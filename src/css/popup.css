@@ -2,16 +2,12 @@ body {
     width: 600px;
 }
 
-#content > md-content {
-    background-color: #eee;
-}
-
 .loginHeader{
     background-color: white !important;
     
 }
-.loginLabel{
+h2 {
     color: #1564c2;
-    padding: 20px;
-    text-decoration: none;    
+    /* padding: 20px; */
+    /* text-decoration: none;     */
 }

@@ -7,13 +7,20 @@
     <base href="/">
 </head>
 <body>
-    <md-content id="content" layout="column" flex ng-app="teamcityApp" ng-controller="teamcityApp">
+    <div ng-app="teamcityApp" ng-controller="teamcityApp">
         <md-toolbar class="md-whiteframe-z2 loginHeader">
-                <!-- <a ng-show="$root.loggedIn" href="#/home" ui-sref="home" class="loginLabel">not logged in</a>             -->
-            <a ng-hide="$root.loggedIn" class="loginLabel">not logged in</a>
-            <a ng-show="$root.loggedIn" class="loginLabel">already logged</a>            
+            <md-button style="color:#1564c2" ng-click="popup.logout()">log out</md-button>
+                            
+            <!-- <a ng-hide="$root.loggedIn" href="#/home" ui-sref="home" class="loginLabel">not logged in</a>            
+            <a ng-show="$root.loggedIn" class="loginLabel">already logged</a> -->
+            <div class="md-toolbar-tools">
+                <a ui-sref="home" ng-hide="$root.loggedIn"><h2>not logged in</h2></a>
+                <a ui-sref="home" ng-show="$root.loggedIn"><h2>already logged</h2></a>
+                <span flex></span>
+            </div>
+            
         </md-toolbar>
-        <div ui-view></div>
-    </md-content>
+        <div ui-view></div>        
+    </div>
 </body>
 </html>
