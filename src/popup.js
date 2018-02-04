@@ -11,10 +11,13 @@ import routing from './app.config';
 import themeSettings from './themeSettings';
 import loginPage from './feature/home';
 import Settings from './feature/settings';
-import PopupController from './popup.controller';
+import Header from './feature/header';
 
-angular.module('teamcityApp', [loginPage, Settings,  uirouter, angularMaterial, angularAnimate, angularAria, ngCookie])
-    .controller('teamcityApp', PopupController)
+angular.module('teamcityApp', [loginPage, Settings, Header, uirouter, angularMaterial, angularAnimate, angularAria, ngCookie])
+    .controller('teamcityApp',function ($scope) {
+        $scope.greeting = "welcome";
+        console.log($scope.greeting)
+    })
     .config(routing)
     .config(themeSettings)
     .run(['$rootScope', '$transitions', '$state', '$cookies', '$http',

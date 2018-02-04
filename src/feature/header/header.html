@@ -1,0 +1,11 @@
+
+<div data-ng-controller="HeaderController">
+    <md-toolbar class="md-whiteframe-z2 loginHeader">
+        <div class="md-toolbar-tools">
+            <a ui-sref="home" ng-hide="$root.loggedIn"><h2>not logged in</h2></a>
+            <a ui-sref="home" ng-show="$root.loggedIn"><h2>already logged</h2></a>
+            <span flex></span>
+            <md-button style="color:#1564c2" ng-click="header.logout()">log out</md-button>
+        </div>
+    </md-toolbar>    
+</div>
