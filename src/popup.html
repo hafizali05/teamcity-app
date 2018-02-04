@@ -8,18 +8,15 @@
 </head>
 <body>
     <div ng-app="teamcityApp" ng-controller="teamcityApp">
-        <md-toolbar class="md-whiteframe-z2 loginHeader">
+        <div ui-view="header"></div>
+        <!-- <md-toolbar class="md-whiteframe-z2 loginHeader">
             <md-button style="color:#1564c2" ng-click="popup.logout()">log out</md-button>
-                            
-            <!-- <a ng-hide="$root.loggedIn" href="#/home" ui-sref="home" class="loginLabel">not logged in</a>            
-            <a ng-show="$root.loggedIn" class="loginLabel">already logged</a> -->
             <div class="md-toolbar-tools">
                 <a ui-sref="home" ng-hide="$root.loggedIn"><h2>not logged in</h2></a>
                 <a ui-sref="home" ng-show="$root.loggedIn"><h2>already logged</h2></a>
                 <span flex></span>
             </div>
-            
-        </md-toolbar>
+        </md-toolbar> -->
         <div ui-view></div>        
     </div>
 </body>
