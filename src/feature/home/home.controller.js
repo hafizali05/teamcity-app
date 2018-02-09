@@ -38,7 +38,6 @@ export default class HomeController {
             message: 'You are the man!successfully logged in'
         };
         this.creds = data;
-        console.log(this);
         this.auth.validateURL(data.teamcityURL).then(response => {
                 if(response.status === 200){
                     console.log('passed validate url')
