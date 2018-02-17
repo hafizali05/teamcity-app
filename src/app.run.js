@@ -1,5 +1,5 @@
 
-export default function run($rootScope, $transitions, $state, $cookies, $http,authentication){
+export default function run($rootScope, $transitions, $state, $http,authentication){
     chrome.storage.sync.get("teamcity", function(info) {
         console.log('chrome storage:',chrome.runtime.error);
         if(!chrome.runtime.error){
@@ -33,4 +33,4 @@ export default function run($rootScope, $transitions, $state, $cookies, $http,au
  
 }
 
-run.$inject = ['$rootScope', '$transitions', '$state', '$cookies', '$http','authentication'];
+run.$inject = ['$rootScope', '$transitions', '$state', '$http','authentication'];
