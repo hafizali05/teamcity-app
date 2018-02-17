@@ -2,47 +2,37 @@ import angular from 'angular';
 
 class Authentication {
     validateURL(url){
-        chrome.storage.sync.set({ "teamcityURL" : url }, function() {
-            if (chrome.runtime.error) {
-              console.log("Runtime error.");
-            }
-        });
         return fetch(`${ url }/app/rest/latest`);
-
-
     }
-    showBuildCount(){
-        console.log('entered show build counts');
-        var baseURl  = "https://teamcity.keytree.net/httpAuth/app/rest",        
-            headers = new Headers(),
-            options = {
-                credentials: 'include',
-                headers: headers
-            },
-            rest = "/buildQueue";
+    showProjects(data){
+        var baseURl  = `${ data.teamcityURL }/httpAuth/app/rest`,        
+        headers = new Headers(),
+        options = {
+            credentials: 'include',
+            headers: headers
+        },
+        rest = "/projects";
         var successLogin = {
             type: 'basic',
             iconUrl: 'icon-48.png',
             title: 'login successful',
             message: 'You are the man!successfully logged in'
         };
+        headers.append('Authorization', 'Basic ' + window.btoa(data.username + ":" + data.password));
         headers.append("Content-Type", "application/json");
         headers.append("Accept", "application/json");
 
         return fetch(baseURl + rest,options)
-                .then(response => {
-                    console.log('response from ');
+                .then(response => {                                    
                     return response.json();
-                    chrome.notifications.create(successLogin);                                       
                 })
                 .catch(error => {
-                    console.log('error from authenticate',error);
+                    console.log('error from show projects',error);
                     return error;
                 })
     }
 
     authenticate(data){
-        console.log('authneticate data',data);
         // var baseURl  = "https://api.nasa.gov/planetary/apod?api_key=NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo";
         // var baseURl  = `teamcity.keyt.net/httpAuth/app/rest`,
         var baseURl  = `${ data.teamcityURL }/httpAuth/app/rest`,        
@@ -68,9 +58,7 @@ class Authentication {
         headers.append("Accept", "application/json");
 
         return fetch(baseURl + rest,options)
-                .then(response => {
-                    console.log(response);
-                    chrome.notifications.create(successLogin);                                       
+                .then(response => {                                    
                     return response.json();
                 })
                 .catch(error => {

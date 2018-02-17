@@ -5,7 +5,7 @@
             <a ui-sref="home" ng-hide="$root.loggedIn"><h2>not logged in</h2></a>
             <a ui-sref="home" ng-show="$root.loggedIn"><h2>already logged</h2></a>
             <span flex></span>
-            <md-button style="color:#1564c2" ng-click="header.logout()">log out</md-button>
+            <md-button style="color:#1564c2" ng-show="$root.loggedIn" ng-click="header.logout()">log out</md-button>
         </div>
     </md-toolbar>    
 </div>

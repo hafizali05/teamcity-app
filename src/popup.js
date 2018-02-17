@@ -16,8 +16,6 @@ import Header from './feature/header';
 
 angular.module('teamcityApp', [loginPage, Settings, Header, uirouter, angularMaterial, angularAnimate, angularAria, ngCookie])
     .controller('teamcityApp',function ($scope) {
-        $scope.greeting = "welcome";
-        console.log($scope.greeting)
     })
     .config(routing)
     .config(themeSettings)

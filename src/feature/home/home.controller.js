@@ -9,7 +9,7 @@ export default class HomeController {
         this.$state = $state;
     }
 
-    randomName(data) {
+    loginSubmit(data) {
         var ValidURL = {
             type : 'basic',                // type of notification we can change it in chrome developer tools
             iconUrl: 'icon-48.png',          // icon appear for limit
@@ -38,29 +38,49 @@ export default class HomeController {
             message: 'You are the man!successfully logged in'
         };
         this.creds = data;
-        this.auth.validateURL(data.teamcityURL).then(response => {
-                if(response.status === 200){
-                    console.log('passed validate url')
-                    this.auth.authenticate(this.creds)
-                        .then( response => {
-                            console.log('response from controller',response);
-                            if(response && response.project && response.project.length > 1){
-                                console.log(this.$scope);
-                                this.$rootScope.loggedIn = true;
-                                this.$state.go('settings');                            
-                            }
-                        }).catch( error => {
-                        console.log('error from home controller',error);
-                        chrome.notifications.create(fetchError);
-                    });
-                } else {
-                    console.log('Invalid URL');                
-                    chrome.notifications.create(InValidURL);
-                }
-                }).catch(error => {
+
+
+
+        let teamcityURL = this.creds.teamcityURL;
+        let username = this.creds.username;
+        const authenticated = (response)=>{
+            if(response && response.project && response.project.length > 1){
+                this.$rootScope.loggedIn = true;
+                this.$state.go('settings');
+                chrome.notifications.create(successLogin);
+                chrome.storage.sync.set({ 
+                    "teamcity":{
+                        teamcityURL,
+                        username                        
+                    }
+                 }, function() {
+                    if (chrome.runtime.error) {
+                      console.log("Runtime error.");
+                    }
+                });                                                                   
+            } else {
+                chrome.notifications.create(fetchError);                                                                       
+            }
+        }
+
+        const validateURL = (response)=>{
+            if(response.status === 200){
+                this.auth.authenticate(this.creds)
+                    .then(authenticated)
+            } else {
+                console.log('Invalid URL');                
+                chrome.notifications.create(InValidURL);
+            }            
+        }
+
+
+
+        this.auth.validateURL(data.teamcityURL)
+            .then(validateURL)
+            .catch(error => {
                     console.log(error);
-                    return error;                
                     chrome.notifications.create(fetchError);
+                    return error;                
             });
     }
 }

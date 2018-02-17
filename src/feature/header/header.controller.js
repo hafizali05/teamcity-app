@@ -3,13 +3,20 @@ export default class HeaderController {
         this.$scope = $scope;
         this.$rootScope = $rootScope;
         this.$state = $state;
-        console.log('header controller');
     }
-    logout() {
-        // console.log('working',$rootScope);
-        console.log('working with this ',this.$rootScope);        
-        this.$rootScope.loggedIn = false;                    
-        this.$state.go('home');                    
+    logout() {     
+        
+        chrome.storage.sync.remove(["teamcity"],()=>{
+            var error = chrome.runtime.lastError;
+            if (!error) {
+                    this.$rootScope.loggedIn = false;                    
+                    this.$state.go('home');                              
+                } else {
+                    this.$rootScope.loggedIn = false;                    
+                    console.error(error);                    
+                }
+           })
+           
     }    
 }
 
