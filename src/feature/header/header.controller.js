@@ -5,7 +5,6 @@ export default class HeaderController {
         this.$state = $state;
     }
     logout() {     
-        
         chrome.storage.sync.remove(["teamcity"],()=>{
             var error = chrome.runtime.lastError;
             if (!error) {
