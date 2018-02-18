@@ -46,7 +46,7 @@ export default class HomeController {
         const authenticated = (response)=>{
             if(response && response.project && response.project.length > 1){
                 this.$rootScope.loggedIn = true;
-                this.$state.go('settings');
+                this.$state.go('buildLists');
                 chrome.notifications.create(successLogin);
                 chrome.storage.sync.set({ 
                     "teamcity":{

@@ -12,9 +12,18 @@ import themeSettings from './themeSettings';
 import loginPage from './feature/home';
 import Settings from './feature/settings';
 import Header from './feature/header';
-import Buildlists from './feature/buildLists';
+import Buildlists from './feature/buildlists';
 
-angular.module('teamcityApp', [loginPage, Settings, Header, uirouter, angularMaterial, angularAnimate, angularAria])
+angular.module('teamcityApp', [
+        Buildlists, 
+        loginPage, 
+        Settings, 
+        Header, 
+        uirouter, 
+        angularMaterial, 
+        angularAnimate, 
+        angularAria
+    ])
     .controller('teamcityApp',function ($scope) {
     })
     .config(routing)

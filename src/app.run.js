@@ -10,7 +10,7 @@ export default function run($rootScope, $transitions, $state, $http,authenticati
                         console.log(response)
                         if(response && response.count >= 0){
                             $rootScope.loggedIn = true;                                            
-                            $state.go('settings');   
+                            $state.go('buildLists');   
                         } else {
                             $rootScope.loggedIn = false;                                                                        
                             $state.go('home');                                       
