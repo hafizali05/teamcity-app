@@ -26,7 +26,7 @@ export default function run($rootScope, $transitions, $state, $http,authenticati
                 $state.go('home');
             }
         }
-        $state.go('home');          
+        // $state.go('home');          
     });
         
  

@@ -4,7 +4,7 @@ import routing from './buildlists.routes';
 import BuildListsController from './buildlists.controller';
 import authentication from '../../services/authentication.service';
 
-export default angular.module('buildlists', [uirouter,authentication])
+export default angular.module('Buildlists', [uirouter,authentication])
     .config(routing)
     .controller('BuildListsController', BuildListsController)
     .name;
