@@ -1,14 +1,20 @@
 {
   "name": "Chrome Extension Webpack",
   "permissions": [
+    "alarms",
     "cookies",    
     "https://*/*",
     "<all_urls>",
     "storage",
     "notifications",
     "contextMenus"
-    
   ],
+
+  "background": {
+    "scripts": ["background.bundle.js"],
+    "persistent": false
+  },
+
   "web_accessible_resources": [
     "icon-48.png"
   ],
