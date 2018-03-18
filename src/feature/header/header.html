@@ -3,11 +3,14 @@
     <md-toolbar class="md-whiteframe-z2 loginHeader">
         <div class="md-toolbar-tools">
             <a ui-sref="home" ng-hide="$root.loggedIn"><h2>not logged in</h2></a>
-            <md-select ng-model="weapon" placeholder="Projects" ng-show="$root.loggedIn">
-                <md-option value="axe">Axe</md-option>
-                <md-option value="sword">Sword</md-option>
-                <md-option value="wand">Wand</md-option>
-                <md-option value="pen">Pen?</md-option>
+            <md-select  name="projects"
+                        ng-model="selectedItem"
+                        placeholder="Projects" 
+                        class="md-no-underline project-color"
+                        ng-change="header.onChange(selectedItem)">
+                <md-option 
+                    ng-value="$index"
+                    ng-repeat="project in projects" >{{project.name}}</md-option>
             </md-select>
             <span flex></span>
             <md-button style="color:#1564c2" ng-show="$root.loggedIn" ng-click="header.logout()">log out</md-button>

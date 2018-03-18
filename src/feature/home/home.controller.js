@@ -46,6 +46,7 @@ export default class HomeController {
         const authenticated = (response)=>{
             if(response && response.project && response.project.length > 1){
                 this.$rootScope.loggedIn = true;
+                this.$rootScope.projects = response.project;                
                 this.$state.go('settings');
                 chrome.notifications.create(successLogin);
                 chrome.storage.sync.set({ 

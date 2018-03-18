@@ -11,3 +11,7 @@ h2 {
     /* padding: 20px; */
     /* text-decoration: none;     */
 }
+
+md-select.project-color > md-select-value > span > div.md-text {
+    color: black;   
+}
