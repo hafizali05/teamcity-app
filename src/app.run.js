@@ -1,10 +1,8 @@
 
 export default function run($rootScope, $transitions, $state, $http,authentication){
     chrome.storage.sync.get("teamcity", function(info) {
-        console.log('chrome storage:',chrome.runtime.error);
         if(!chrome.runtime.error){
             if(info.hasOwnProperty(['teamcity'])){                
-                console.log('info:',info);
                 authentication.showProjects(info.teamcity)
                     .then((response)=>{
                         // console.log(response)

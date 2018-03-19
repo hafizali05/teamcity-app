@@ -38,7 +38,6 @@ class Authentication {
     }
 
     authenticate(data){
-        console.log('authneticate data',data);
         // var baseURl  = "https://api.nasa.gov/planetary/apod?api_key=NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo";
         // var baseURl  = `teamcity.keyt.net/httpAuth/app/rest`,
         var baseURl  = `${ data.teamcityURL }/httpAuth/app/rest`,        
