@@ -9,9 +9,9 @@ export default function run($rootScope, $transitions, $state, $http,authenticati
                     .then((response)=>{
                         // console.log(response)
                         if(response && response.count >= 0){
-                            $rootScope.loggedIn = true;
                             $rootScope.projects = response.project;                                            
-                            $state.go('settings');   
+                            $rootScope.loggedIn = true;                                            
+                            $state.go('buildLists');
                         } else {
                             $rootScope.loggedIn = false;                                                                        
                             $state.go('home');                                       
