@@ -3,7 +3,6 @@ export default class HeaderController {
         this.$scope = $scope;
         this.$rootScope = $rootScope;
         this.$state = $state;
-        console.log('$rootScope.projects',$rootScope.projects);
         $scope.selectedProject = null;        
         $scope.projects = $rootScope.projects;
         // this.$scope.project_model = $scope.projects[0];
