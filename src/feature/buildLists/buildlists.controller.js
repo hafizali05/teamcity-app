@@ -24,6 +24,4 @@ export default class BuildListsController {
                 return error;
             })            
     }    
-
 }
-BuildListsController.$inject = ['$scope','authentication','build','$state','$rootScope'];

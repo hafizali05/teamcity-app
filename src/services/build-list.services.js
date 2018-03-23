@@ -28,25 +28,10 @@ class Build{
                                 console.log(error);
                                 return error;
                             });
-        return promise;
-        // headers.append('Authorization', 'Basic ' + window.btoa('hdidarali' + ":" + 'sdsd'));
-        // headers.append("Content-Type", "application/json");
-        // headers.append("Accept", "application/json");
-        // return fetch('http://api.open-notify.org/astros.json')
-        //     .then(response =>{
-        //         return response.json();
-        //     })
-        // return fetch(baseURl + rest,options)
-        //         .then(response => {                                    
-        //             return response.json();
-        //         })
-        //         .catch(error => {
-        //             console.log('error from show projects',error);
-        //             return error;
-        //         })        
+        return promise;    
     }
 }
-Build.$inject = ['$http'];
+
 export default angular.module('services.build', [])
     .service('build', Build)
     .name;
