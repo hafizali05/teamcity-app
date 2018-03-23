@@ -8,4 +8,3 @@ export default class SettingsController {
         console.log('show build working');
     }
 }
-SettingsController.$inject = ['$scope','authentication'];

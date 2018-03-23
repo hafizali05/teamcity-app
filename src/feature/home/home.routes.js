@@ -1,5 +1,3 @@
-routes.$inject = ['$stateProvider'];
-
 import home from './home.html';
 import header from '../header/header.html';
 

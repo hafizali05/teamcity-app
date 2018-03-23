@@ -31,5 +31,3 @@ export default function run($rootScope, $transitions, $state, $http,authenticati
         
  
 }
-
-run.$inject = ['$rootScope', '$transitions', '$state', '$http','authentication'];

@@ -25,5 +25,3 @@ export default class HeaderController {
            
     }    
 }
-
-HeaderController.$inject = ['$scope','$rootScope','$state'];
