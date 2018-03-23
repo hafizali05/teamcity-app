@@ -85,5 +85,3 @@ export default class HomeController {
             });
     }
 }
-
-HomeController.$inject = ['$scope','authentication','$state','$rootScope'];
