@@ -1,27 +1,29 @@
 export default class BuildListsController {
     constructor(
         $scope,
-        authentication,
-        build,
         $state,
+        $http,
         $rootScope
     ){
         this.$scope = $scope;
-        this.$rootScope = $rootScope;
-        this.auth = authentication;
-        this.build = build;
         this.$state = $state;
-        this.$scope.buildlist = null;                     
+        this.$rootScope = $rootScope;
+        this.$http = $http;
+        this.$scope.buildlist = null;
+        this.teamcity = null;        
     }
     $onInit() {
-        // this.$http
-        this.build.showbuild()
+        const chromeStorage = chrome.storage.sync;
+        chromeStorage.get('teamcity',(ele)=>{
+            this.populateBuilds(ele);
+        })        
+    }
+    populateBuilds(ele){
+        console.log(ele);
+        var url = `${ ele.teamcity.teamcityURL }/httpAuth/app/rest/builds`;
+        this.$http.get(url)
             .then((response)=>{
-                this.$scope.buildlist = response;
+                this.$scope.buildlist = response.data.build;
             })
-            .catch(error => {
-                console.log('error from show show build',error);
-                return error;
-            })            
-    }    
+    }
 }

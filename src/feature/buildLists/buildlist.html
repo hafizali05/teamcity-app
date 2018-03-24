@@ -1,4 +1,48 @@
-<div ng-controller="BuildListsController">
+<div ng-controller="BuildListsController" ng-cloak>
+
+    <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">
+        <span class="activeBuilds">Watched Builds</span>
+        </h2>
+    </md-toolbar>
+    
+    <md-content>
+        <md-list>
+        <md-list-item class="md-3-line" ng-repeat="build in buildlist">
+            <div class="md-list-item-text">
+            <h3>{{build.buildTypeId}}</h3>
+            <h4>{{build.state}}</h4>
+            <p>{{build.status}}</p>
+            </div>
+            <md-button class="md-secondary">Watch</md-button>
+            <md-button class="md-secondary">Start</md-button>
+            <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+        </md-list>
+    </md-content>
+    
+    <md-toolbar class="md-theme-light">
+        <h2 class="md-toolbar-tools">
+        <span class="activeBuilds">UnWatched Builds</span>
+        </h2>
+    </md-toolbar>
+      
+    <md-content>
+        <md-list>
+            <md-list-item class="md-3-line" ng-repeat="build in buildlist">
+                <div class="md-list-item-text">
+                <h3>{{build.buildTypeId}}</h3>
+                <h4>{{build.state}}</h4>
+                <p>{{build.status}}</p>
+                </div>
+                <md-button class="md-secondary">UnWatch</md-button>
+                <md-button class="md-secondary">Start</md-button>
+                <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</div>
+<!-- <div ng-controller="BuildListsController">
 
     <md-content>
         <md-list>
@@ -13,4 +57,4 @@
             </md-list-item>
         </md-list>
     </md-content>
-      </div>
+</div> -->

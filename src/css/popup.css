@@ -1,5 +1,6 @@
 body {
-    width: 600px;
+    width: 600px !important;
+    position: inherit !important;
 }
 
 .loginHeader{
@@ -14,4 +15,8 @@ h2 {
 
 md-select.project-color > md-select-value > span > div.md-text {
     color: black;   
+}
+
+.activeBuilds {
+    color: white;
 }
