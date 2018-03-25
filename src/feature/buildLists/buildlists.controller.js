@@ -1,55 +1,105 @@
 export default class BuildListsController {
-    constructor(
-        $scope,
-        $state,
-        $http,
-        $rootScope
-    ){
-        this.$scope = $scope;
-        this.$state = $state;
-        this.$rootScope = $rootScope;
-        this.$http = $http;
-        this.$scope.allbuilds = null;
-    }
-    $onInit() {
-        this.onChanged();
-        const chromeStorage = chrome.storage.sync;
-        chromeStorage.get('teamcity',(ele)=>{
-            this.populateBuilds(ele);
-        })        
-    }
-    populateBuilds(ele){
-        var url = `${ ele.teamcity.teamcityURL }/httpAuth/app/rest/builds`;
-        this.$http.get(url)
-            .then((response)=>{
-                this.$scope.allbuilds = response.data.build;
-            })
-    }
-    startWatch(data){
-        chrome.storage.sync.get('teamcity',(ele)=>{
-            var userdata = ele;
-            console.log('userdata:',userdata.teamcity.build);
-            if(Array.isArray(userdata.teamcity.build)){
-                userdata.teamcity.build.push(data);
-                console.log('userdata has build:',userdata);
-                chrome.storage.sync.set({
-                    'teamcity':userdata.teamcity
-                },(error)=>{
-                    console.log(error);
-                })                
-            } else {
-                console.log('userdata does not have build:',userdata);                
-                userdata.teamcity.build = [data];
-                chrome.storage.sync.set(userdata,(error)=>{
-                    console.log(error);
-                })                
-            }
-        })
-    }
-    
-    onChanged(){
-        chrome.storage.onChanged.addListener(function(changes, nameSpace){
-            console.log('changes, nameSpace',changes, nameSpace);
-        });        
-    }    
+	constructor (
+		$scope,
+		$state,
+		$rootScope,
+		$http
+	) {
+		this.$scope = $scope;
+		this.$state = $state;
+		this.$rootScope = $rootScope;
+		this.$http = $http;
+		this.$scope.allbuilds = null;
+		this.$scope.watched = null;
+	}
+	$onInit () {
+		this.onChanged();
+		const chromeStorage = chrome.storage.local;
+		chromeStorage.get('teamcity', (ele,error) => {
+			if(!error){
+				this.populateBuilds(ele);
+			} else {
+				throw new Error(error);
+			}
+		});
+	}
+	populateBuilds (ele) {
+		const url = `${ele.teamcity.teamcityURL}/httpAuth/app/rest/buildTypes`;
+		this.$http.get(url)
+			.then((response) => {
+				this.getUserDataToUpdateBuilds(response.data.buildType);
+			}).catch((error)=>{
+				throw new Error(error);
+			});
+	}
+
+	getUserDataToUpdateBuilds (builds) {
+		chrome.storage.local.get('teamcity', (userdata) => {
+			if (!chrome.runtime.error) {
+				this.filterbuilds(userdata.teamcity.buildIds,builds);
+			} else {
+				throw new Error(chrome.runtime.error);
+			}
+		});
+	}
+
+	filterbuilds(bids,builds){
+		
+		if(bids.length != 0){
+			bids.forEach((id) => {
+				builds.map((build) => {
+					if (build.id === id) {
+						build.watched = true;
+					}
+				});
+			});
+			this.$scope.allbuilds = builds;
+			this.$scope.$apply();
+		} else {      
+			this.$scope.allbuilds = builds;            
+			this.$scope.$apply();            
+		}     
+	}    
+	startWatch (data) {
+		// console.log('data:',data);
+		chrome.storage.local.get('teamcity', (userdata, error) => {
+			var bids = userdata.teamcity.buildIds;
+			if(!bids.includes(data)){
+				if (!error) {	
+					if (Array.isArray(bids)) {
+						bids.push(data);
+						chrome.storage.local.set({
+							teamcity: userdata.teamcity,
+						}, (error) => {
+							if(error){
+								throw new Error(error);
+							}
+						});
+					} else {
+						bids = [data];
+						chrome.storage.local.set(userdata, (error) => {
+							if (error) {
+								throw new Error(error);
+							}
+						});
+					}
+				} else {
+					throw new Error(error);
+				}
+			}
+		});
+	}
+
+	onChanged () {
+		chrome.storage.onChanged.addListener((changes) => {
+			if(changes.newValue){
+				var builds = this.$scope.allbuilds;
+				var newValLen = changes.newValue.buildIds.length;
+				var oldValLen = changes.oldValue.buildIds.length;
+				if(newValLen > oldValLen){
+					this.getUserDataToUpdateBuilds(builds);
+				}
+			}  
+		});
+	}
 }

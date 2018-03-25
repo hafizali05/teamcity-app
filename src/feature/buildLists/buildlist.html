@@ -8,15 +8,16 @@
     
     <md-content>
         <md-list>
-        <md-list-item class="md-3-line" ng-repeat="build in buildlist">
-            <div class="md-list-item-text">
-            <h3>{{build.buildTypeId}}</h3>
-            <h4>{{build.state}}</h4>
-            <p>{{build.status}}</p>
-            </div>
-            <md-button class="md-secondary">Watch</md-button>
-            <md-button class="md-secondary">Start</md-button>
-            <md-divider ng-if="!$last"></md-divider>
+        <md-list-item class="md-3-line" 
+            ng-repeat="build in allbuilds | filter: { watched: true }">
+                <div class="md-list-item-text">
+                    <h3>{{build.name}}</h3>
+                    <h4>{{build.id}}</h4>
+                <!-- <p>{{build.status}}</p> -->
+                </div>
+                <md-button class="md-secondary">UnWatch</md-button>
+                <md-button class="md-secondary">Start</md-button>
+                <md-divider ng-if="!$last"></md-divider>
         </md-list-item>
         </md-list>
     </md-content>
@@ -29,15 +30,18 @@
       
     <md-content>
         <md-list>
-            <md-list-item class="md-3-line" ng-repeat="build in allbuilds">
-                <div class="md-list-item-text">
-                <h3>{{build.buildTypeId}}</h3>
-                <h4>{{build.state}}</h4>
-                <p>{{build.status}}</p>
-                </div>
-                <md-button class="md-secondary" ng-click="buildlist.startWatch(build.buildTypeId)">UnWatch</md-button>
-                <md-button class="md-secondary">Start</md-button>
-                <md-divider ng-if="!$last"></md-divider>
+            <md-list-item class="md-3-line" 
+                ng-repeat="build in allbuilds | orderBy:'id'">
+                    <div class="md-list-item-text">
+                        <h3>{{build.name}}</h3>
+                        <h4>{{build.projectName}}</h4>
+                    </div>
+                    <md-button  class="md-secondary" 
+                                ng-click="buildlist.startWatch(build.id)">
+                                Watch
+                    </md-button>
+                    <md-button class="md-secondary">Start</md-button>
+                    <md-divider ng-if="!$last"></md-divider>
             </md-list-item>
         </md-list>
     </md-content>
