@@ -44,18 +44,19 @@ export default class BuildListsController {
 	}
 
 	filterbuilds(bids,builds){
-		
-		if(bids.length != 0){
-			bids.forEach((id) => {
-				builds.map((build) => {
-					if (build.id === id) {
-						build.watched = true;
-					}
-				});
+		// console.log('filter build');	s	
+		if(builds.length < 1){
+			throw new Error('no builds available to show');
+		}            
+		if(bids.length !== 0){
+			builds.map(b=>{
+				return bids.includes(b.id) ? b.watched = true : b.watched =  false;
 			});
+			// console.log(builds);
 			this.$scope.allbuilds = builds;
 			this.$scope.$apply();
-		} else {      
+		} else {
+			builds.map(b => b.watched = false);      
 			this.$scope.allbuilds = builds;            
 			this.$scope.$apply();            
 		}     
@@ -64,7 +65,7 @@ export default class BuildListsController {
 		// console.log('data:',data);
 		chrome.storage.local.get('teamcity', (userdata, error) => {
 			var bids = userdata.teamcity.buildIds;
-			if(!bids.includes(data)){
+			if(!bids.includes(data)){ // true if build doesnt have the buildId
 				if (!error) {	
 					if (Array.isArray(bids)) {
 						bids.push(data);
@@ -89,17 +90,37 @@ export default class BuildListsController {
 			}
 		});
 	}
-
+	setData(userdata){
+		chrome.storage.local.set({
+			teamcity: userdata.teamcity,
+		}, (error) => {
+			if(error){
+				throw new Error(error);
+			}
+		});
+	}
+	stopWatch(data){
+		// console.log(data);
+		chrome.storage.local.get('teamcity', (userdata, error) => {
+			if(!error){
+				var bids = userdata.teamcity.buildIds;
+				var index = bids.indexOf(data);
+				if (index >= 0) {
+					bids.splice( index, 1 );
+				}
+				this.setData(userdata);
+			}else {
+				throw new Error(error);
+			}         
+		});        
+	}
 	onChanged () {
 		chrome.storage.onChanged.addListener((changes) => {
-			if(changes.newValue){
-				var builds = this.$scope.allbuilds;
-				var newValLen = changes.newValue.buildIds.length;
-				var oldValLen = changes.oldValue.buildIds.length;
-				if(newValLen > oldValLen){
-					this.getUserDataToUpdateBuilds(builds);
-				}
-			}  
+			var newValLen = changes && changes.teamcity && changes.teamcity.newValue && changes.teamcity.newValue.buildIds && changes.teamcity.newValue.buildIds.length;
+			var oldValLen = changes && changes.teamcity && changes.teamcity.oldValue && changes.teamcity.oldValue.buildIds && changes.teamcity.oldValue.buildIds.length;                                                    
+			if(newValLen > oldValLen || oldValLen > newValLen){
+				this.getUserDataToUpdateBuilds(this.$scope.allbuilds);
+			}
 		});
 	}
 }
