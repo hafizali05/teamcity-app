@@ -15,19 +15,33 @@ export default class BuildListsController {
 	$onInit () {
 		this.onChanged();
 		const chromeStorage = chrome.storage.local;
+		const href = '/httpAuth/app/rest/buildTypes';
+		this.$rootScope.$on('filterProject',(event, data)=>{
+			this.changeProject(data.href);
+		});
 		chromeStorage.get('teamcity', (ele,error) => {
 			if(!error){
-				this.populateBuilds(ele);
+				this.populateBuilds(ele,href);
 			} else {
 				throw new Error(error);
 			}
 		});
 	}
-	populateBuilds (ele) {
-		const url = `${ele.teamcity.teamcityURL}/httpAuth/app/rest/buildTypes`;
+	changeProject(href){
+		const chromeStorage = chrome.storage.local;
+		chromeStorage.get('teamcity', (ele,error) => {
+			if(!error){
+				this.populateBuilds(ele,href);
+			} else {
+				throw new Error(error);
+			}
+		});		
+	}
+	populateBuilds (ele,href) {
+		const url = `${ele.teamcity.teamcityURL}${href}`;
 		this.$http.get(url)
 			.then((response) => {
-				this.getUserDataToUpdateBuilds(response.data.buildType);
+				this.getUserDataToUpdateBuilds(response.data.buildType || response.data.buildTypes.buildType);
 			}).catch((error)=>{
 				throw new Error(error);
 			});
