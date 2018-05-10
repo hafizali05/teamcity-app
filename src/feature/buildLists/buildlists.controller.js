@@ -3,7 +3,8 @@ export default class BuildListsController {
 		$scope,
 		$state,
 		$rootScope,
-		$http
+		$http,
+		authentication
 	) {
 		this.$scope = $scope;
 		this.$state = $state;
@@ -11,6 +12,7 @@ export default class BuildListsController {
 		this.$http = $http;
 		this.$scope.allbuilds = null;
 		this.$scope.watched = null;
+		this.auth = authentication;		
 	}
 	$onInit () {
 		this.onChanged();
@@ -27,6 +29,17 @@ export default class BuildListsController {
 			}
 		});
 	}
+	startAlarm(){
+		console.log('start alarm');
+		chrome.runtime.sendMessage({setAlarm: true});
+        
+		// chrome.runtime.sendMessage('hello from hafiz',function(res){
+		//     console.log(res);
+		// });
+        
+		// chrome.alarms.create("myAlarm",{delayInMinutes: 0.1, periodInMinutes: 0.2});
+	}
+
 	changeProject(href){
 		const chromeStorage = chrome.storage.local;
 		chromeStorage.get('teamcity', (ele,error) => {
@@ -77,6 +90,7 @@ export default class BuildListsController {
 	}    
 	startWatch (data) {
 		// console.log('data:',data);
+		chrome.runtime.sendMessage({name:'general', setAlarm: true});					
 		chrome.storage.local.get('teamcity', (userdata, error) => {
 			var bids = userdata.teamcity.buildIds;
 			if(!bids.includes(data)){ // true if build doesnt have the buildId
@@ -115,6 +129,7 @@ export default class BuildListsController {
 	}
 	stopWatch(data){
 		// console.log(data);
+		// chrome.runtime.sendMessage({setAlarm: false});			
 		chrome.storage.local.get('teamcity', (userdata, error) => {
 			if(!error){
 				var bids = userdata.teamcity.buildIds;
@@ -123,6 +138,9 @@ export default class BuildListsController {
 					bids.splice( index, 1 );
 				}
 				this.setData(userdata);
+				if(userdata.teamcity.buildIds.length === 0){
+					chrome.runtime.sendMessage({setAlarm: false});
+				}
 			}else {
 				throw new Error(error);
 			}         
