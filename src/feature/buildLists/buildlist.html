@@ -1,5 +1,4 @@
 <div ng-controller="BuildListsController" ng-cloak>
-
     <md-toolbar class="md-theme-light">
         <h2 class="md-toolbar-tools">
         <span class="activeBuilds">Watched Builds</span>
@@ -18,7 +17,6 @@
                             ng-click="buildlist.stopWatch(build.id)">
                             UnWatch
                 </md-button>
-                <md-button class="md-secondary">Start</md-button>
                 <md-divider ng-if="!$last"></md-divider>
         </md-list-item>
         </md-list>
@@ -40,7 +38,6 @@
                                 ng-click="buildlist.startWatch(build.id)">
                                 Watch
                     </md-button>
-                    <md-button class="md-secondary">Start</md-button>
                     <md-divider ng-if="!$last"></md-divider>
             </md-list-item>
         </md-list>
