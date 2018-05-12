@@ -51,7 +51,7 @@ chrome.runtime.onMessage.addListener(function(msg, _, sendResponse) {
 			'general',
 			{
 				delayInMinutes: 0.1, // delay before it starts the first time
-				periodInMinutes: 3, // interval on which it would trigger
+				periodInMinutes: 1, // interval on which it would trigger
 			}
 		);
 
@@ -131,17 +131,18 @@ let checkStatusOfTheBuild = ()=>{
 };
 let getStatusOfBuild = (response)=> {
 	console.log('getStatusOfBuild:',response);
-	return !(response.build[0].running) ? sendNotification(response.build[0].status) : null; 
+	return !(response.build[0].running) ? sendNotification(response) : null; 
 };
-let sendNotification = (status) => {
+let sendNotification = (response) => {
+	let status = response.build[0].status;
 	console.log('sendNotification', status);
 	buildsToWatch = null;
 	chrome.alarms.clear('priority');
 	chrome.notifications.create({
 		type: 'basic',
 		iconUrl: 'icon-48.png',
-		title: status === 'success' ? 'Deployment Successful' : 'Deployment failed',
-		message: status === 'success' ? 'Deployment Successful' : 'Deployment failed',
+		title: response.build[0].buildTypeId.toString(),
+		message: status === 'SUCCESS' ? 'Deployment Successful' : 'Deployment failed',
 	});
 };
 let checkIfMyBuildExist = (response)=> {
@@ -166,7 +167,7 @@ let triggerPriorityAlarm = ()=>{
 		'priority',
 		{
 			delayInMinutes: 0.1, // delay before it starts the first time
-			periodInMinutes: 1, // interval on which it would trigger
+			periodInMinutes: 0.5, // interval on which it would trigger
 		}
 	);	
 };				
