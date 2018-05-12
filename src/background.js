@@ -23,6 +23,7 @@ let priorityCounter = 0;
 let headers = new Headers();
 let username;
 let password = '';
+let teamcityURL;
 headers.append('Authorization', 'Basic ' + window.btoa(username + ":" + password));
 headers.append("Content-Type", "application/json");
 headers.append("Accept", "application/json");
@@ -36,6 +37,7 @@ chrome.runtime.onMessage.addListener(function(msg, _, sendResponse) {
 	chrome.storage.local.get('teamcity', (userdata, error) => {
 		if(!error){
 			username = userdata.teamcity.username;
+			teamcityURL = userdata.teamcity.teamcityURL;
 		}else {
 			throw new Error(error);
 		}         
@@ -94,7 +96,7 @@ chrome.alarms.onAlarm.addListener((callback)=> {
 
 let checkIfMyBuildIsOn = ()=> {
 	console.log('<<<<<<<<<<<<<<<<<<<<<<<<<,                ' + 'genCounter' +  genCounter + '                <<<<<<<<<<<<<<<<<<<<<<<<<,');	
-	return fetch('https://teamcity.keytree.net/httpAuth/app/rest/builds?locator=running:true',options)
+	return fetch(teamcityURL + '/httpAuth/app/rest/builds?locator=running:true',options)
 		.then((response)=>{
 			return response.json();
 		})
@@ -121,7 +123,7 @@ let watchBuild = ()=>{
 };
 let checkStatusOfTheBuild = ()=>{
 	console.log('checkStatusOfTheBuild',buildsToWatch);
-	return fetch('https://teamcity.keytree.net/httpAuth/app/rest/builds?locator=id:' + `${buildsToWatch}`,options)
+	return fetch(teamcityURL + '/httpAuth/app/rest/builds?locator=id:' + `${buildsToWatch}`,options)
 		.then(response=>{
 			return response.json();
 		})
